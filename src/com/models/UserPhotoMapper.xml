@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="userphoto">
+	<select id="getPhotoById" parameterType="int" resultType="com.models.UserPhoto">
+		select * from userphoto where userId=#{id}
+	</select>
+	
+	<insert id="insertIntoUserPhoto" parameterType="com.models.UserPhoto">
+		<selectKey keyProperty="userId" order="AFTER" resultType="java.lang.Integer">
+			select last_insert_id()
+		</selectKey>
+		insert into userphoto(userId,imageUrl) value(#{userId},#{imageUrl})
+	</insert>
+	
+	<update id="updatePhoto" parameterType="com.models.UserPhoto">
+		update userphoto set imageUrl = #{imageUrl} where userId = #{userId}
+	</update>
+</mapper>

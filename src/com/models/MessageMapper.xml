@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="messageinfo">
+	<select id="getMessageById" parameterType="int" resultType="com.models.Message">
+		select * from messageinfo where messageId=#{id}
+	</select>
+	<select id="getUserInfoByUserId" parameterType="int" resultType="com.models.Message">
+		select * from messageinfo where userId=#{userId}
+	</select>
+	<select id="getUserInfoByPosition" parameterType="com.models.Position" resultType="com.models.Message">
+		select * from messageinfo where (x &lt; #{maxLongitude} and x &gt; #{minLongitude} and y &lt; #{maxLatitude} and y &gt; #{minLatitude})
+	</select>
+	<insert id="insertIntoMessageInfo" parameterType="com.models.Message">
+		<selectKey keyProperty="messageId" order="AFTER" resultType="java.lang.Integer">
+			select last_insert_id()
+		</selectKey>
+		insert into messageinfo(userId,text,publish_time,x,y,transmitTimes,commentTimes,favourTimes) value(#{userId},#{text},#{publish_time},#{x},#{y},#{transmitTimes},#{commentTimes},#{favourTimes})
+	</insert>
+</mapper>

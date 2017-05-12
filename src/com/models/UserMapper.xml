@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="userinfo">
+	<select id="getUserInfoById" parameterType="int" resultType="com.models.User">
+		select * from userinfo where userId=#{id}
+	</select>
+	<select id="getUserInfoByEmail" parameterType="String" resultType="com.models.User">
+		select * from userinfo where email_adress=#{email}
+	</select>
+	<delete id="deleteStudentById" parameterType="int">
+		delete from userinfo where userId = #{id}
+	</delete>
+	<update id="updateStudent" parameterType="com.models.User" >
+		update userinfo set userId = #{id},userName=#{Name},age=#{Age} where userId=#{id}
+	</update>
+	<insert id="insertIntoUserInfo" parameterType="com.models.User">
+		<selectKey keyProperty="userId" order="AFTER" resultType="java.lang.Integer">
+			select last_insert_id()
+		</selectKey>
+		insert into userinfo(userName,password,email_adress) value(#{userName},#{password},#{email_adress})
+	</insert>
+</mapper>
